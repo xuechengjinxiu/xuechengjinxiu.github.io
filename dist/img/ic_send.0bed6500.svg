@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>ic_send</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01A_Home" transform="translate(-67.000000, -360.000000)">
+            <g id="Buttons" transform="translate(16.000000, 342.000000)">
+                <g id="Button">
+                    <g id="ic_send" transform="translate(51.000000, 18.000000)">
+                        <path d="M5.5,15.50025 C5.224,15.50025 5,15.27625 5,15.00025 L5,7.50025 L2.00044518,7.50025 C1.79844518,7.50025 1.61544518,7.37825 1.53844518,7.19125 C1.46044518,7.00425 1.50344518,6.79025 1.64644518,6.64625 L7.64644518,0.64625 C7.84244518,0.45125 8.15844518,0.45125 8.35444518,0.64625 L14.3544452,6.64625 C14.4974452,6.79025 14.5404452,7.00425 14.4624452,7.19125 C14.3854452,7.37825 14.2024452,7.50025 14.0004452,7.50025 L11,7.50025 L11,15.00025 C11,15.27625 10.776,15.50025 10.5,15.50025 L5.5,15.50025 Z M9.8,14.30025 L9.8,6.30025 L12.31139,6.30025 L8.0004473,1.9893033 L3.6894932,6.30025 L6.2,6.30025 L6.2,14.30025 L9.8,14.30025 Z" id="Path" fill="#FF8B00" fill-rule="nonzero"></path>
+                        <rect x="0" y="0" width="16" height="16"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
