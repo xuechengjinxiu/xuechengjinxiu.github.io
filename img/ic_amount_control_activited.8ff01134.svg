@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>ic_amount_control_activited</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="31A_Creat-Token-Wallet" transform="translate(-103.000000, -687.000000)">
+            <g id="Form" transform="translate(12.000000, 267.000000)">
+                <g id="Control" transform="translate(20.000000, 420.000000)">
+                    <g id="ic_amount_control_activited" transform="translate(71.000000, 0.000000)">
+                        <g id="Shape">
+                            <circle id="Circle" stroke="#068EF1" stroke-width="1.2" fill="#FFFFFF" cx="10" cy="10" r="9.4"></circle>
+                            <rect id="Path" fill="#9E9E9E" x="7" y="6" width="6" height="1"></rect>
+                            <polygon id="Path" fill="#9E9E9E" points="7 9.5 13 9.5 13 10.5 7 10.5"></polygon>
+                            <rect id="Path" fill="#9E9E9E" x="7" y="13" width="6" height="1"></rect>
+                        </g>
+                        <rect x="0" y="0" width="20" height="20"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
