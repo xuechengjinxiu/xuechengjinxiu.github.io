@@ -6911,7 +6911,6 @@ var asmLibraryArg = {
   "fd_write": _fd_write,
   "getTempRet0": _getTempRet0,
   "gettimeofday": _gettimeofday,
-  "invoke_ddi": invoke_ddi,
   "invoke_di": invoke_di,
   "invoke_dii": invoke_dii,
   "invoke_id": invoke_id,
@@ -6922,7 +6921,6 @@ var asmLibraryArg = {
   "invoke_iiii": invoke_iiii,
   "invoke_v": invoke_v,
   "invoke_vi": invoke_vi,
-  "invoke_viddi": invoke_viddi,
   "invoke_vii": invoke_vii,
   "invoke_viii": invoke_viii,
   "invoke_viiii": invoke_viiii,
@@ -7049,17 +7047,6 @@ function invoke_iiii(index,a1,a2,a3) {
   }
 }
 
-function invoke_ddi(index,a1,a2) {
-  var sp = stackSave();
-  try {
-    return getWasmTableEntry(index)(a1,a2);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0) throw e;
-    _setThrew(1, 0);
-  }
-}
-
 function invoke_iii(index,a1,a2) {
   var sp = stackSave();
   try {
@@ -7130,17 +7117,6 @@ function invoke_id(index,a1) {
   var sp = stackSave();
   try {
     return getWasmTableEntry(index)(a1);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0) throw e;
-    _setThrew(1, 0);
-  }
-}
-
-function invoke_viddi(index,a1,a2,a3,a4) {
-  var sp = stackSave();
-  try {
-    getWasmTableEntry(index)(a1,a2,a3,a4);
   } catch(e) {
     stackRestore(sp);
     if (e !== e+0) throw e;
