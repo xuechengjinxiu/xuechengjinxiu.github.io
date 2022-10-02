@@ -1,38 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <div id="box">
-        <video id="media" autoplay></video>
-        <button id="capture">点击抓拍</button>
+<html>
+  <head>
+    <title>media-recorder</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div>
+      <video class="video" width="600px" controls></video>
     </div>
-    <canvas id="canvas" width="480" height="320"></canvas>
-
+    <div>
+      <button class="record-btn">录制</button>
+    </div>
     <script>
-        const media = document.getElementById('media')	// video元素
-        const capture = document.getElementById('capture')	// button元素
+      const btn = document.querySelector('.record-btn');
+      btn.addEventListener('click', async function () {
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+        });
 
-        const canvas = document.getElementById('canvas')  // canvas元素
-        const context = canvas.getContext('2d')
+        // 浏览器对webm的支持情况
+        const mime = MediaRecorder.isTypeSupported('video/webm; codecs=vp9')
+          ? 'video/webm; codecs=vp9'
+          : 'video/webm';
 
-        navigator.mediaDevices.getUserMedia({video: {width: 480, height: 320}, audio: true}).then(stream => {
-            // 将视频流设置为video元素的源
-            media.srcObject = stream
-            // 低版本浏览器
-            // media.src = window.URL.createObjectURL(stream)
-            media.play()
-        })
+        // 实例一个媒体录制对象录制
+        const mediaRecorder = new MediaRecorder(stream, {
+          mimeType: mime,
+        });
 
-        // 绑定拍照按钮的单机事件
-        capture.addEventListener('click', () => {
-            context.drawImage(media, 0, 0)	// 将video在canvas上绘制出来
-            canvas.toBlob(blob => {		// 将canvas转换为blob
-                console.log(blob)
-            })
-        })
+        // blob parts
+        const chunks = [];
+
+        mediaRecorder.ondataavailable = function (e) {
+          chunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = function () {
+          const blob = new Blob(chunks, {
+            type: chunks[0].type,
+          });
+          const url = URL.createObjectURL(blob);
+
+          const video = document.querySelector('video');
+          video.src = url;
+
+          // 视频下载
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'video.webm';
+          a.click();
+
+          URL.revokeObjectURL(blob);
+        };
+
+        // 开始记录
+        mediaRecorder.start();
+      });
     </script>
-</body>
+  </body>
 </html>
