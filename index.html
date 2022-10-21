@@ -15,6 +15,7 @@
       const btn = document.querySelector('.record-btn');
       btn.addEventListener('click', async function () {
         const stream = await navigator.mediaDevices.getDisplayMedia({
+          audio: true,
           video: true,
         });
 
