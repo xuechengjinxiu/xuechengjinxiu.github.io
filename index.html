@@ -1,38 +1,75 @@
-<!DOCTYPE html>
-<html lang="en" >
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>Face Detect Online</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js" integrity="sha512-2RDFHqfLZW8IhPRvQYmK9bTLfj/hddxGXQAred2wNZGkrKQkLGj8RCkXfRJPHlDerdHHIzTFaahq4s/P4V6Qig==" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <div id="box">
-        <video id="media" autoplay></video>
-        <button id="capture">点击抓拍</button>
-    </div>
-    <canvas id="canvas" width="480" height="320"></canvas>
-
-    <script>
-        const media = document.getElementById('media')	// video元素
-        const capture = document.getElementById('capture')	// button元素
-
-        const canvas = document.getElementById('canvas')  // canvas元素
-        const context = canvas.getContext('2d')
-
-        navigator.mediaDevices.getUserMedia({video: {width: 480, height: 320}, audio: true}).then(stream => {
-            // 将视频流设置为video元素的源
-            media.srcObject = stream
-            // 低版本浏览器
-            // media.src = window.URL.createObjectURL(stream)
-            media.play()
-        })
-
-        // 绑定拍照按钮的单机事件
-        capture.addEventListener('click', () => {
-            context.drawImage(media, 0, 0)	// 将video在canvas上绘制出来
-            canvas.toBlob(blob => {		// 将canvas转换为blob
-                console.log(blob)
-            })
-        })
-    </script>
+  <h1>Face Detect Online</h1>
+  <img src="{{ url_for('video_feed') }}">
+  <div id="stop">stop</div>
 </body>
+
 </html>
+<script>
+          var socket = io.connect("http://127.0.0.1:5000");
+
+    // var ws = new WebSocket("ws://localhost:8080/echo");
+    // ws.onopen = function () {
+    //   console.log("open");
+    // }
+    // ws.onmessage = function (e) {
+    //   console.log(e)
+    // }
+    // ws.onclose = function (e) {
+    //   console.log("close");
+    // }
+    // ws.onerror = function (e) {
+    //   console.log(e);
+    // }
+  var MediaUtils = {
+    getUserMedia: function (videoEnable, audioEnable, callback) {
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || window.getUserMedia;
+      var constraints = {
+        video: videoEnable,
+        audio: audioEnable
+      };
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+          callback(false, stream);
+        })['catch'](function (err) {
+          callback(err);
+        });
+      } else if (navigator.getUserMedia) {
+        navigator.getUserMedia(constraints, function (stream) {
+          callback(false, stream);
+        }, function (err) {
+          callback(err);
+        });
+      } else {
+        callback(new Error('Not support userMedia'));
+      }
+    },
+  }
+  function requestMedia() {
+    var chunks = []
+    MediaUtils.getUserMedia(true, true, (err, stream) => {
+      if (err) throw err
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start(0);
+      mediaRecorder.onstop = (e) => stream.stop();
+      document.getElementById('stop').addEventListener("click", () => mediaRecorder.stop())
+
+      mediaRecorder.ondataavailable = (e) => {
+        chunks.push(e.data);
+        if (chunks.length >= 1000) {
+          var mimeFile = new File([new Blob(chunks, { 'type': this.mediaRecorder.mimeType })], 'msr-' + (new Date).toISOString().replace(/:|\./g, '-') + '.mp4');
+          socket.emit('stream', mimeFile);
+          chunks = []
+        }
+      }
+    })
+  }
+  requestMedia()
+</script>
