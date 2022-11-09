@@ -9,9 +9,9 @@
 
 <body style="background-color: black;">
   <h1>Face Detect Online</h1>
-  <video id="video" width="500px" height="300px" autoplay="autoplay"></video>
+  <video style="display: none;" id="video" width="500px" height="300px" autoplay="autoplay"></video>
   <img src="http://192.168.1.177:5000/video_feed" />
-  <div id="stop">stop</div>
+  <div click='stop' style="color: wheat;" id="stop">stop</div>
 </body>
 
 </html>
@@ -42,14 +42,23 @@
       }
     },
   }
+  
+  function stop() {
+    const video = document.querySelector('#video');
+    // A video's MediaStream object is available through its srcObject attribute
+    const mediaStream = video.srcObject;
+    // Through the MediaStream, you can get the MediaStreamTracks with getTracks():
+    const tracks = mediaStream.getTracks();
+    // Or stop all like so:
+    tracks.forEach(track => track.stop())
+  }
+
   function requestMedia() {
     var chunks = []
     MediaUtils.getUserMedia(true, true, (err, stream) => {
       if (err) throw err
       var elementVideo = document.querySelector("#video");
       elementVideo.srcObject = stream;
-      console.log(elementVideo.width)
-      console.log(elementVideo.height)
       var canvas = document.createElement("canvas");
       setInterval(() => {
         canvas.getContext('2d').drawImage(elementVideo, 0, 0, elementVideo.width, elementVideo.height);
